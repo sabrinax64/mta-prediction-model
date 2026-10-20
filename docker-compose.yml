@@ -1,0 +1,33 @@
+services:
+  db:
+    image: timescale/timescaledb:latest-pg16
+    environment:
+      POSTGRES_USER: mta
+      POSTGRES_PASSWORD: mta
+      POSTGRES_DB: mta
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mta"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://mta:mta@db:5432/mta
+      POLL_INTERVAL_SECONDS: "30"
+    ports:
+      - "8000:8000"
+    volumes:
+      - gtfs_static_data:/app/data
+
+volumes:
+  db_data:
+  gtfs_static_data:

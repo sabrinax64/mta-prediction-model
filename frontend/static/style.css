@@ -1,0 +1,29 @@
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: system-ui, sans-serif;
+}
+
+header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  background: #111;
+  color: white;
+}
+
+header h1 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+#status {
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+#map {
+  height: calc(100% - 44px);
+  width: 100%;
+}
